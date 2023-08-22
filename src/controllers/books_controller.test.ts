@@ -147,4 +147,17 @@ describe("DELETE /api/v1/books/{bookId} endpoint", () => {
 			expect(res.statusCode).toEqual(203);
 			expect(res.body).toBe("Book 2 Successfully Deleted.");
 		});
+
+		test("status code 400 when deleting a book", async () => {
+			// Arrange
+			jest
+			.spyOn(bookService, "deleteBook")
+
+			// Act
+			const res = await request(app).delete("/api/v1/books/5");
+
+			// Assert
+			expect(res.statusCode).toEqual(400);
+			expect(res.body).toBe("Error: Book 5 does not exist, cannot successfully delete.");
+		});
 });

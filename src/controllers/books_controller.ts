@@ -37,10 +37,13 @@ export const updateBook = async (req: Request, res: Response) => {
 };
 
 export const deleteBook = async (req: Request, res: Response) => {
-	const bookDeleteData = req.body;
 	const bookId = Number.parseInt(req.params.bookId);
+	const book = await bookService.deleteBook(bookId);
+	if (book){
+		res.status(203).json(`Book ${bookId} Successfully Deleted.`);
+	}else{
+		res.status(400).json(`Error: Book ${bookId} does not exist, cannot successfully delete.`);
+	}
 
-	const book = await bookService.updateBook(bookId, bookDeleteData);
-	res.status(203).json("Book 2 Successfully Deleted.");
 };
 
