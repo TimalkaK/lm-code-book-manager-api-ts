@@ -25,8 +25,6 @@ export const updateBook = async (bookId: number, book: Book) => {
 
 export const deleteBook = async (bookId: number) => {
 	return Book.destroy({
-		where: {
-			bookId,
-		},
+		where: { bookId },
 	});	
 };

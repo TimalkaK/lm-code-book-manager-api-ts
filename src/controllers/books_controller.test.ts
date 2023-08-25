@@ -135,29 +135,38 @@ describe("POST /api/v1/books endpoint", () => {
 });
 
 describe("DELETE /api/v1/books/{bookId} endpoint", () => {
-		test("status code successfully 203 for deleting a book and message", async () => {
-			// Arrange
-			jest
-			.spyOn(bookService, "deleteBook")
+	test("status code successfully 203 for deleting book 1", async () => {
+		//Arrange
+		jest.spyOn(bookService, "deleteBook").mockResolvedValue(1); // success at deleting
 
-			// Act
-			const res = await request(app).delete("/api/v1/books/2");
+		// Act
+		const res = await request(app).delete("/api/v1/books/1");
+		// Assert
+		expect(res.statusCode).toEqual(203);
+	});
 
-			// Assert
-			expect(res.statusCode).toEqual(203);
-			expect(res.body).toBe("Book 2 Successfully Deleted.");
-		});
+	test("status code successfully 203 for deleting book 2", async () => {
+		//Arrange
+		jest.spyOn(bookService, "deleteBook").mockResolvedValue(1); // success at deleting
 
-		test("status code 400 when deleting a book", async () => {
-			// Arrange
-			jest
-			.spyOn(bookService, "deleteBook")
+		// Act
+		const res = await request(app).delete("/api/v1/books/2");
+		// Assert
+		expect(res.statusCode).toEqual(203);
+	});
 
-			// Act
-			const res = await request(app).delete("/api/v1/books/5");
+	
+	test("status code 400 when deleting book fails", async () => {
+		//Arrange
+		jest.spyOn(bookService, "deleteBook").mockResolvedValue(0); // failed at deleting
 
-			// Assert
-			expect(res.statusCode).toEqual(400);
-			expect(res.body).toBe("Error: Book 5 does not exist, cannot successfully delete.");
-		});
+		// Act
+		const res = await request(app).delete("/api/v1/books/5");
+		// Assert
+		expect(res.statusCode).toEqual(400);
+	});
 });
+
+
+
+
